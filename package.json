@@ -1,0 +1,20 @@
+{
+  "name": "cahier_de_recettes",
+  "version": "1.0.0",
+  "description": "un exercice ou je dois faire une API",
+  "homepage": "https://github.com/Josselin-Fauconnier/cahier_de_recettes#readme",
+  "bugs": {
+    "url": "https://github.com/Josselin-Fauconnier/cahier_de_recettes/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Josselin-Fauconnier/cahier_de_recettes.git"
+  },
+  "license": "ISC",
+  "author": "JosselinFauconnier",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
