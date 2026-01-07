@@ -1,18 +1,19 @@
 const Recette = require ('../Modeles/Recette');
 
-exports.createRecette = async (req , res) => {
-    try {
-       const recette = new Recette ({
-        ...req.body
-       });
-       await recette.save();
-
-       res.status (201).json({message: 'recette créée',recette});
-    }catch(error) {
-res.status(400).json({error: error.message})
+exports.createRecette = async (req, res) => {
+  try {
+    const recetteObject = req.body;
     
-    }
-        
+    const recette = new Recette({
+      ...recetteObject,
+      
+      PhotosUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null
+    });
+    await recette.save();
+    res.status(201).json({ message: 'Recette enregistrée !', recette });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 exports.getAllRecettes = async (req , res) => {

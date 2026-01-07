@@ -5,11 +5,15 @@ const recetteSchema = new mongoose.Schema ({
         type: String,
         required: true,
     },
+    PhotosUrl :{
+        type:String,
+    },
+
     ingredients: {
         type: [String],
         required: true,
     },
-    Temps_préparations: {
+    Preparation: {
         type: Number,
         required: true,
     },
@@ -18,9 +22,9 @@ const recetteSchema = new mongoose.Schema ({
         required: true,
     },
 
-    Difficulté:{
+    Difficulte:{
         type: String,
-        enum: ['Facile','Moyen','Diffcile'],
+        enum: ['Facile','Moyen','Difficile'],
     },
 
     Prix: {
