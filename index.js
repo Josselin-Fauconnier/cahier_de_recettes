@@ -1,14 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const recetteRoutes = require('./Routes/RecetteRoutes');
 
 
 const app = express();
 const port = 3000;
 
+app.use(express.json());
 
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/cahier_de_recettes')
+
+mongoose.connect('mongodb+srv://Josselin:Hydra+1234@josselin.v6orhgg.mongodb.net/?appName=Josselin')
   .then(() => {
     console.log('Connecté à MongoDB avec succès');
   })
@@ -17,11 +20,11 @@ mongoose.connect('mongodb://127.0.0.1:27017/cahier_de_recettes')
   });
 
 app.get('/', (req, res) => {
-  res.send('API Cahier de Recettes est en ligne !');
+  res.send('Mon API cahier de recettes');
 });
 
 
-app.use('/utilisateurs', utilisateurRoutes);
+
 app.use('/recettes', recetteRoutes);
 
 app.listen(port, () => {
