@@ -54,3 +54,52 @@ exports.deleteRecette = async (req, res) => {
         res.status(400).json({error: error.message});
     }
 }
+
+
+
+exports.addCommentaire = async (req, res) => {
+    try {
+        const { auteur, contenu } = req.body;
+        const { id } = req.params;
+
+       
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(400).json({ message: "ID de recette invalide" });
+        }
+
+        
+        if (
+            typeof auteur !== "string" ||
+            typeof contenu !== "string" ||
+            auteur.trim().length === 0 ||
+            contenu.trim().length === 0
+        ) {
+            return res.status(400).json({
+                message: "Auteur et contenu doivent être des chaînes non vides"
+            });
+        }
+
+        const commentaire = {
+            auteur: auteur.trim(),
+            contenu: contenu.trim(),
+            createdAt: new Date()
+        };
+
+        const recette = await Recette.findByIdAndUpdate(
+            id,
+            { $push: { commentaires: commentaire } },
+            { new: true }
+        );
+
+        if (!recette) {
+            return res.status(404).json({ message: "Recette non trouvée" });
+        }
+
+      
+        res.status(201).json(recette);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Erreur interne du serveur" });
+    }
+};

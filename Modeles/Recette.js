@@ -47,7 +47,13 @@ const recetteSchema = new mongoose.Schema ({
      Date: {
         type: Date,
         default: Date.now,
-     }
+     },
+
+     Commentaires:[{
+        auteur: String,
+        contenue:String,
+        date:{type: Date, default: Date.now},
+     }]
     });
 
     module.exports = mongoose.model('Recette', recetteSchema);
