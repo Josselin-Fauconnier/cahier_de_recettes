@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const configDB = require('./configurationJS/configDB');
 const recetteRoutes = require('./Routes/RecetteRoutes');
+const utilisateurRoutes = require('./Routes/UtilisateurRoutes');
 
 
 const app = express();
@@ -38,6 +39,7 @@ app.get('/', (req, res) => {
 
 
 app.use('/recettes', recetteRoutes);
+app.use('/utilisateurs', utilisateurRoutes);
 
 app.listen(port, () => {
   console.log(`Serveur démarré sur http://localhost:${port}`);
