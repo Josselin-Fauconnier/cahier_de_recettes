@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('../Middlewares/multer-config'); 
+const multer = require('../configurationJS/multer-config'); 
 const recetteController = require('../Controleurs/RecetteControleur');
 
 router.post('/', multer, recetteController.createRecette);

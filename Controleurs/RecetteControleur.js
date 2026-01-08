@@ -1,4 +1,5 @@
 const Recette = require('../Modeles/Recette');
+const { sendError } = require('../configurationJS/gestionnaireErreur');
 
 exports.createRecette = async (req, res) => {
     try {
@@ -9,11 +10,7 @@ exports.createRecette = async (req, res) => {
         await recette.save();
         res.status(201).json({ message: 'Recette créée avec succès', recette });
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(val => val.message);
-            return res.status(400).json({ message: "Erreur de validation", erreurs: messages });
-        }
-        res.status(500).json({ error: error.message });
+        sendError(res, error);
     }
 };
 
@@ -76,10 +73,7 @@ exports.getAllRecettes = async (req, res) => {
         });
 
     } catch (error) {
-        res.status(500).json({
-            message: "Erreur lors de la récupération des recettes",
-            error: error.message
-        });
+        sendError(res, error);
     }
 };
 
@@ -87,11 +81,11 @@ exports.getRecetteById = async (req, res) => {
     try {
         const recette = await Recette.findOne({ _id: req.params.id });
         if (!recette) {
-            return res.status(404).json({ message: 'Recette non trouvée !' });
+            throw { isCustom: true, status: 404, message: 'Recette non trouvée !' };
         }
         res.status(200).json(recette);
     } catch (error) {
-        res.status(404).json({ error: error.message });
+        sendError(res, error);
     }
 };
 
@@ -109,7 +103,7 @@ exports.deleteRecette = async (req, res) => {
         await Recette.deleteOne({ _id: req.params.id });
         res.status(200).json({ message: 'Recette supprimée' });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        sendError(res, error);
     }
 }
 
@@ -122,7 +116,7 @@ exports.addCommentaire = async (req, res) => {
 
         const recette = await Recette.findById(id);
         if (!recette) {
-            return res.status(404).json({ message: "Recette non trouvée" });
+            throw { isCustom: true, status: 404, message: "Recette non trouvée" };
         }
 
         recette.Commentaires.push({ auteur, contenu });
@@ -131,13 +125,6 @@ exports.addCommentaire = async (req, res) => {
         res.status(201).json(recette);
 
     } catch (error) {
-        if (error.name === 'ValidationError') {
-            const messages = Object.values(error.errors).map(val => val.message);
-            return res.status(400).json({ message: "Erreur de validation", erreurs: messages });
-        }
-        if (error.name === 'CastError') {
-            return res.status(400).json({ message: "ID de recette invalide" });
-        }
-        res.status(500).json({ message: "Erreur serveur", error: error.message });
+        sendError(res, error);
     }
 };
