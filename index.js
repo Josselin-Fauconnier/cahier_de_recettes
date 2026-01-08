@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 
 
-mongoose.connect(config.url)
+mongoose.connect(config.MONGO_URI)
   .then(() => {
     console.log('Connecté à MongoDB avec succès');
   })

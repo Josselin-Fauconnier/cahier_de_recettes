@@ -51,7 +51,7 @@ const recetteSchema = new mongoose.Schema ({
 
      Commentaires:[{
         auteur: String,
-        contenue:String,
+        contenu:String,
         date:{type: Date, default: Date.now},
      }]
     });
