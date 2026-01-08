@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const config = require('./config');
 const recetteRoutes = require('./Routes/RecetteRoutes');
 
 
@@ -24,7 +25,7 @@ app.use((req, res, next) => {
 
 
 
-mongoose.connect('mongodb+srv://Josselin:Hydra+1234@josselin.v6orhgg.mongodb.net/?appName=Josselin')
+mongoose.connect(config.url)
   .then(() => {
     console.log('Connecté à MongoDB avec succès');
   })
