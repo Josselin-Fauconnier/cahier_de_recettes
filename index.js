@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config');
+const configDB = require('./configurationJS/configDB');
 const recetteRoutes = require('./Routes/RecetteRoutes');
 
 
@@ -23,9 +23,7 @@ app.use((req, res, next) => {
 });
 
 
-
-
-mongoose.connect(config.MONGO_URI)
+mongoose.connect(configDB.MONGO_URI)
   .then(() => {
     console.log('Connecté à MongoDB avec succès');
   })

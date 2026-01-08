@@ -1,62 +1,88 @@
-const mongoose = require ('mongoose');
- 
-const recetteSchema = new mongoose.Schema ({
+const mongoose = require('mongoose');
+
+const recetteSchema = new mongoose.Schema({
     Titre: {
         type: String,
-        required: true,
+        required: [true, "Le titre est obligatoire"],
+        minlength: [3, "Le titre doit contenir au moins 3 caractères"]
     },
-    PhotosUrl :{
-        type:String,
+    PhotosUrl: {
+        type: String,
     },
 
     ingredients: {
         type: [String],
-        required: true,
+        required: [true, "La liste des ingrédients est obligatoire"],
+        validate: {
+            validator: function (v) {
+                return v && v.length > 0;
+            },
+            message: "La recette doit comporter au moins un ingrédient"
+        }
     },
     Preparation: {
         type: Number,
-        required: true,
+        required: [true, "Le temps de préparation est obligatoire"],
+        min: [1, "Le temps de préparation doit être d'au moins 1 minute"]
     },
-    Temps_cuisson:{
+    Temps_cuisson: {
         type: Number,
-        required: true,
+        required: [true, "Le temps de cuisson est obligatoire"],
+        min: [0, "Le temps de cuisson ne peut pas être négatif"]
     },
 
-    Difficulte:{
+    Difficulte: {
         type: String,
-        enum: ['Facile','Moyen','Difficile'],
+        required: [true, "La difficulté est obligatoire"],
+        enum: {
+            values: ['Facile', 'Moyen', 'Difficile'],
+            message: "La difficulté doit être : Facile, Moyen ou Difficile"
+        }
     },
 
     Prix: {
-        type:Number,
+        type: Number,
+        min: [0, "Le prix ne peut pas être négatif"]
     },
 
-    Ustensiles : {
+    Ustensiles: {
         type: [String],
-        required: true,
+        required: [true, "La liste des ustensiles est obligatoire"]
     },
-     Etapes: {
+    Etapes: {
         type: [String],
-        required: true,
-     },
+        required: [true, "Les étapes de la recette sont obligatoires"],
+        validate: {
+            validator: function (v) {
+                return v && v.length > 0;
+            },
+            message: "La recette doit comporter au moins une étape"
+        }
+    },
 
-     Auteur: {
+    Auteur: {
         type: String,
-        required: true,
-     },
-     Date: {
+        required: [true, "L'auteur est obligatoire"]
+    },
+    Date: {
         type: Date,
         default: Date.now,
-     },
+    },
 
-     Commentaires:[{
-        auteur: String,
-        contenu:String,
-        date:{type: Date, default: Date.now},
-     }]
-    });
+    Commentaires: [{
+        auteur: {
+            type: String,
+            required: [true, "L'auteur du commentaire est obligatoire"]
+        },
+        contenu: {
+            type: String,
+            required: [true, "Le contenu du commentaire est obligatoire"]
+        },
+        date: { type: Date, default: Date.now },
+    }]
+});
 
-    module.exports = mongoose.model('Recette', recetteSchema);
+module.exports = mongoose.model('Recette', recetteSchema);
 
 
 
