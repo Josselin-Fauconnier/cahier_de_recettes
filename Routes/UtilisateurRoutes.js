@@ -3,6 +3,7 @@ const router = express.Router();
 const utilisateurCtrl = require('../Controleurs/UtilisateurControleur');
 
 router.post('/', utilisateurCtrl.createUtilisateur);
+router.post('/connexion', utilisateurCtrl.connexionUtilisateur);
 router.get('/', utilisateurCtrl.getAllUtilisateurs);
 router.get('/:id', utilisateurCtrl.getUtilisateurById);
 router.put('/:id', utilisateurCtrl.updateUtilisateur);

@@ -1,5 +1,6 @@
 const Utilisateur = require('../Modeles/Utilisateur');
 const { sendError } = require('../configurationJS/gestionnaireErreur');
+const jwt = require('jsonwebtoken');
 
 exports.createUtilisateur = async (req, res) => {
     try {
@@ -52,6 +53,40 @@ exports.deleteUtilisateur = async (req, res) => {
         }
         res.status(200).json({ message: 'Utilisateur supprimé' });
     } catch (error) {
+        sendError(res, error);
+    }
+};
+
+exports.connexionUtilisateur = async (req, res) => {
+    try {
+        
+        const { email, Mot_de_passe } = req.body;
+        
+       
+        const utilisateur = await Utilisateur.findOne({ email });
+        
+        
+        if (!utilisateur) {
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+        }
+        
+        const estValide = await utilisateur.comparePassword(Mot_de_passe);
+        if (!estValide) {
+            return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+        }
+       
+        const token = jwt.sign(
+            { utilisateurId: utilisateur._id },
+            'VOTRE_CLE_SECRETTE', 
+            { expiresIn: '24h' }
+        );
+        res.status(200).json({ 
+            message: 'Connexion réussie',
+            token, 
+            utilisateurId: utilisateur._id 
+        });
+    } catch (error) {
+      
         sendError(res, error);
     }
 };

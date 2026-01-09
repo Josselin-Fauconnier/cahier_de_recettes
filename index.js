@@ -33,7 +33,7 @@ mongoose.connect(configDB.MONGO_URI)
   });
 
 app.get('/', (req, res) => {
-  res.send('Mon API cahier de recettes');
+  res.send('Test pour voir ');
 });
 
 
