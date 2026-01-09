@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: API Cahier de Recettes
+  description: Documentation complète de mon API
+  version: 1.0.0
+servers:
+- url: http://localhost:3000
+  description: Serveur de développement local
+paths:
+  /recettes:
+    get:
+      tags:
+      - Recettes
+      summary: Récupérer toutes les recettes
+      responses:
+        "200":
+          description: Liste des recettes
+    post:
+      tags:
+      - Recettes
+      summary: Créer une nouvelle recette
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Recette"
+      responses:
+        "201":
+          description: Recette créée
+      security:
+      - bearerAuth: []
+  /recettes/{id}:
+    get:
+      tags:
+      - Recettes
+      summary: Récupérer une recette par son ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Détails de la recette
+    put:
+      tags:
+      - Recettes
+      summary: Mettre à jour une recette
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/Recette"
+      responses:
+        "200":
+          description: Recette mise à jour
+    delete:
+      tags:
+      - Recettes
+      summary: Supprimer une recette
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Recette supprimée
+  /utilisateurs:
+    get:
+      tags:
+      - Utilisateurs
+      summary: Récupérer tous les utilisateurs
+      responses:
+        "200":
+          description: Liste des utilisateurs
+    post:
+      tags:
+      - Utilisateurs
+      summary: Créer un compte utilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Utilisateur"
+      responses:
+        "201":
+          description: Utilisateur créé
+  /utilisateurs/connexion:
+    post:
+      tags:
+      - Utilisateurs
+      summary: Connecter un utilisateur
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Utilisateur"
+      responses:
+        "200":
+          description: "Connexion réussie, jeton retourné"
+components:
+  schemas:
+    Recette:
+      type: object
+      properties:
+        titre:
+          type: string
+        ingredients:
+          type: string
+        etapes:
+          type: string
+        auteur:
+          type: string
+        image:
+          type: string
+          format: binary
+    Utilisateur:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        motDePasse:
+          type: string
+          format: password
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
