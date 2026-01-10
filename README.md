@@ -4,7 +4,7 @@ Une API RESTful construite avec **Node.js**, **Express** et **MongoDB** pour gé
 
 ## Lien de l'API en direct
 L'API est déployée sur AlwaysData et peut être testée ici :
-👉 [https://josselinfauconnier.alwaysdata.net/](https://josselinfauconnier.alwaysdata.net/)
+ [https://josselinfauconnier.alwaysdata.net/](https://josselinfauconnier.alwaysdata.net/)
 
 ---
 
@@ -32,7 +32,7 @@ L'API est déployée sur AlwaysData et peut être testée ici :
 | :--- | :--- | :--- |
 | **GET** | `/` | Récupérer toutes les recettes |
 | **GET** | `/:id` | Récupérer une recette par son ID |
-| **POST** | `/` | Créer une nouvelle recette (nécessite Auth + Image) |
+| **POST** | `/` | Créer une nouvelle recette (nécessite Auth + Image(option)) |
 | **PUT** | `/:id` | Modifier une recette |
 | **DELETE** | `/:id` | Supprimer une recette |
 | **POST** | `/:id/commentaires` | Ajouter un commentaire à une recette |
@@ -78,4 +78,4 @@ L'API est déployée sur AlwaysData et peut être testée ici :
 ---
 
 ##  Auteur
-**Josselin Fauconnier** - *Projet Phase 2 - La Plateforme_*
+**Josselin Fauconnier** - *Projet  formation CDPI Phase 2 - La Plateforme_*
