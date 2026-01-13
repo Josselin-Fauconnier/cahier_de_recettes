@@ -30,10 +30,10 @@ L'API est déployée sur AlwaysData et peut être testée ici :
 ### Recettes (`/recettes`)
 | Méthode | Endpoint | Description |
 | :--- | :--- | :--- |
-| **GET** | `/` | Récupérer toutes les recettes |
+| **GET** | `/` | Récupérer toutes les recettes (filtres possibles) |
 | **GET** | `/:id` | Récupérer une recette par son ID |
-| **POST** | `/` | Créer une nouvelle recette (nécessite Auth + Image(option)) |
-| **PUT** | `/:id` | Modifier une recette |
+| **POST** | `/` | Créer une recette (**Auth requise** + Image optionnelle) |
+| **PUT** | `/:id` | Modifier une recette (Image optionnelle) |
 | **DELETE** | `/:id` | Supprimer une recette |
 | **POST** | `/:id/commentaires` | Ajouter un commentaire à une recette |
 

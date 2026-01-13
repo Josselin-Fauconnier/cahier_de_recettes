@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('../configurationJS/multer-config'); 
+const multer = require('../configurationJS/multer-config');
 const recetteController = require('../Controleurs/RecetteControleur');
 const auth = require('../configurationJS/Auth');
 
-router.post('/', multer, recetteController.createRecette);
+router.post('/', auth, multer, recetteController.createRecette);
 router.post('/:id/commentaires', recetteController.addCommentaire);
-router.post('/', auth,recetteController.createRecette);
 router.get('/', recetteController.getAllRecettes);
 router.get('/:id', recetteController.getRecetteById);
 router.put('/:id', multer, recetteController.updateRecette);

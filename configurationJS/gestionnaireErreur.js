@@ -22,6 +22,8 @@ const sendError = (res, error) => {
         return res.status(error.status).json({ message: error.message });
     }
 
+    return res.status(500).json({message:"Erreur interne du serveur"});
+
 
 }
 

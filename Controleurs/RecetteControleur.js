@@ -94,7 +94,7 @@ exports.updateRecette = async (req, res) => {
         await Recette.updateOne({ _id: req.params.id }, { ...req.body });
         res.status(200).json({ message: 'Recette mis à jour' });
     } catch (error) {
-        res.status(400).json({ error: error.message });
+        sendError(res, error);
     }
 }
 
