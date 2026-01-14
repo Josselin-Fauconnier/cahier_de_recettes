@@ -32,19 +32,20 @@ L'API est déployée sur AlwaysData et peut être testée ici :
 | :--- | :--- | :--- |
 | **GET** | `/` | Récupérer toutes les recettes (filtres possibles) |
 | **GET** | `/:id` | Récupérer une recette par son ID |
-| **POST** | `/` | Créer une recette (**Auth requise** + Image optionnelle) |
-| **PUT** | `/:id` | Modifier une recette (Image optionnelle) |
-| **DELETE** | `/:id` | Supprimer une recette |
-| **POST** | `/:id/commentaires` | Ajouter un commentaire à une recette |
+| **POST** | `/` | Créer une recette (**Auth requise** + Image) |
+| **PUT** | `/:id` | Modifier une recette (**Auth requise** + Image) |
+| **DELETE** | `/:id` | Supprimer une recette (**Auth requise**) |
+| **POST** | `/:id/commentaires` | Ajouter un commentaire (**Auth requise**) |
 
 ### Utilisateurs (`/utilisateurs`)
 | Méthode | Endpoint | Description |
 | :--- | :--- | :--- |
-| **GET** | `/` | Liste des utilisateurs |
+| **GET** | `/` | Liste des utilisateurs (**Auth requise**) |
 | **POST** | `/` | Inscription d'un nouvel utilisateur |
 | **POST** | `/connexion` | Connexion et récupération du Token JWT |
-| **PUT** | `/:id` | Modifier un profil |
-| **DELETE** | `/:id` | Supprimer un compte |
+| **PUT** | `/:id` | Modifier un profil (**Auth requise**) |
+| **DELETE** | `/:id` | Supprimer un compte (**Auth requise**) |
+
 
 ---
 
