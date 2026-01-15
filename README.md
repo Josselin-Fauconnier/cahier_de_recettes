@@ -18,6 +18,7 @@ L'API est déployée sur AlwaysData et peut être testée ici :
 ---
 
 ##  Structure des Dossiers
+- `images/` : Stock les images .
 - `Routes/` : Définit les points de terminaison de l'API.
 - `Controleurs/` : Contient la logique métier pour chaque route.
 - `Modeles/` : Schémas Mongoose pour les recettes et les utilisateurs.
