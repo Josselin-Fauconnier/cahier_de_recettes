@@ -33,7 +33,7 @@ mongoose.connect(configDB.MONGO_URI)
   });
 
 app.get('/', (req, res) => {
-  res.send('Test pour voir ');
+  res.send('Mon projet cuisine ');
 });
 
 

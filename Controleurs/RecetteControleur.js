@@ -1,13 +1,16 @@
 const Recette = require('../Modeles/Recette');
+const Utilisateur = require('../Modeles/Utilisateur');
 const { sendError } = require('../configurationJS/gestionnaireErreur');
 
 exports.createRecette = async (req, res) => {
     try {
         const recette = new Recette({
             ...req.body,
+            Auteur: req.auth.userId,
             PhotosUrl: req.file ? `${req.protocol}://${req.get('host')}/images/${req.file.filename}` : null
         });
         await recette.save();
+        await Utilisateur.findByIdAndUpdate(req.auth.userId, { $inc: { Recettes_postées: 1 } });
         res.status(201).json({ message: 'Recette créée avec succès', recette });
     } catch (error) {
         sendError(res, error);
@@ -91,7 +94,14 @@ exports.getRecetteById = async (req, res) => {
 
 exports.updateRecette = async (req, res) => {
     try {
-        await Recette.updateOne({ _id: req.params.id }, { ...req.body });
+        const recette = await Recette.findById(req.params.id);
+        if (!recette) {
+            throw { isCustom: true, status: 404, message: 'Recette non trouvée' };
+        }
+        if (recette.Auteur.toString() !== req.auth.userId) {
+            throw { isCustom: true, status: 403, message: 'Action non autorisée' };
+        }
+        await Recette.findByIdAndUpdate(req.params.id, { ...req.body }, { runValidators: true });
         res.status(200).json({ message: 'Recette mis à jour' });
     } catch (error) {
         sendError(res, error);
@@ -100,7 +110,15 @@ exports.updateRecette = async (req, res) => {
 
 exports.deleteRecette = async (req, res) => {
     try {
+        const recette = await Recette.findById(req.params.id);
+        if (!recette) {
+            throw { isCustom: true, status: 404, message: 'Recette non trouvée' };
+        }
+        if (recette.Auteur.toString() !== req.auth.userId) {
+            throw { isCustom: true, status: 403, message: 'Action non autorisée' };
+        }
         await Recette.deleteOne({ _id: req.params.id });
+        await Utilisateur.findByIdAndUpdate(req.auth.userId, { $inc: { Recettes_postées: -1 } });
         res.status(200).json({ message: 'Recette supprimée' });
     } catch (error) {
         sendError(res, error);

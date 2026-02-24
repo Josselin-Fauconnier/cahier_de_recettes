@@ -6,7 +6,8 @@ exports.createUtilisateur = async (req, res) => {
     try {
         const utilisateur = new Utilisateur({ ...req.body });
         await utilisateur.save();
-        res.status(201).json({ message: 'Utilisateur créé avec succès', utilisateur });
+        const { Mot_de_passe, ...utilisateurSansPassword } = utilisateur.toObject();
+        res.status(201).json({ message: 'Utilisateur créé avec succès', utilisateur: utilisateurSansPassword });
     } catch (error) {
         sendError(res, error);
     }
@@ -14,7 +15,7 @@ exports.createUtilisateur = async (req, res) => {
 
 exports.getAllUtilisateurs = async (req, res) => {
     try {
-        const utilisateurs = await Utilisateur.find();
+        const utilisateurs = await Utilisateur.find().select('-Mot_de_passe');
         res.status(200).json(utilisateurs);
     } catch (error) {
         sendError(res, error);
@@ -23,7 +24,7 @@ exports.getAllUtilisateurs = async (req, res) => {
 
 exports.getUtilisateurById = async (req, res) => {
     try {
-        const utilisateur = await Utilisateur.findById(req.params.id);
+        const utilisateur = await Utilisateur.findById(req.params.id).select('-Mot_de_passe');
         if (!utilisateur) {
             throw { isCustom: true, status: 404, message: 'Utilisateur non trouvé' };
         }
@@ -35,7 +36,7 @@ exports.getUtilisateurById = async (req, res) => {
 
 exports.updateUtilisateur = async (req, res) => {
     try {
-        const utilisateur = await Utilisateur.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true, runValidators: true });
+        const utilisateur = await Utilisateur.findByIdAndUpdate(req.params.id, { ...req.body }, { new: true, runValidators: true }).select('-Mot_de_passe');
         if (!utilisateur) {
             throw { isCustom: true, status: 404, message: 'Utilisateur non trouvé' };
         }

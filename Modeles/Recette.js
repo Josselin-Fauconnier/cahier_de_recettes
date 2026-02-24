@@ -61,7 +61,8 @@ const recetteSchema = new mongoose.Schema({
     },
 
     Auteur: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Utilisateur',
         required: [true, "L'auteur est obligatoire"]
     },
     Date: {
