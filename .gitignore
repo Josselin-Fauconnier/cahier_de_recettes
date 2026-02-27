@@ -1,2 +1,3 @@
 node_modules/
 configurationJS/configDB.js
+.env

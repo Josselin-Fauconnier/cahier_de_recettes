@@ -81,7 +81,7 @@ exports.connexionUtilisateur = async (req, res) => {
                 utilisateurId: utilisateur._id,
                 limiteAbsolue: Date.now() + (2 * 60 * 60 * 1000) 
             },
-            'VOTRE_CLE_SECRETTE',
+            process.env.JWT_SECRET,
             { expiresIn: '30m' }
         );
         res.status(200).json({

@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
             throw new Error("Header d'autorisation manquant");
         }
         const token = req.headers.authorization.split(' ')[1];
-        const decodedToken = jwt.verify(token, 'VOTRE_CLE_SECRETTE');
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
 
         if (Date.now() > decodedToken.limiteAbsolue) {
@@ -20,7 +20,7 @@ module.exports = (req, res, next) => {
                 utilisateurId: decodedToken.utilisateurId,
                 limiteAbsolue: decodedToken.limiteAbsolue
             },
-            'VOTRE_CLE_SECRETTE',
+            process.env.JWT_SECRET,
             { expiresIn: '30m' }
         );
 
